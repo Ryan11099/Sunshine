@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springsecuritydemo" />
+        <module name="springboot-shiro" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="springboot-shiro" target="1.8" />
       <module name="springsecuritydemo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
