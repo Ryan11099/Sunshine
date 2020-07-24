@@ -8,6 +8,7 @@
       <list>
         <option value="$PROJECT_DIR$/springboot_shiro/pom.xml" />
         <option value="$PROJECT_DIR$/springsecuritydemo/pom.xml" />
+        <option value="$PROJECT_DIR$/HdfsClientDemo/pom.xml" />
       </list>
     </option>
   </component>
