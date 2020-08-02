@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringsecuritydemoApplication {
 
     public static void main(String[] args) {
-        log.info("项目启动。。。");
+        System.out.println("项目启动。。。");
         SpringApplication.run(SpringsecuritydemoApplication.class, args);
-        log.info("项目启动完成。。。");
+        System.out.println("项目启动完成。。。");
     }
 
 }

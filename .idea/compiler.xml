@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,17 +10,22 @@
         <module name="springsecuritydemo" />
         <module name="HdfsClientDemo" />
         <module name="springboot-shiro" />
+        <module name="WordCount" />
+        <module name="demo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
       <module name="HdfsClientDemo" target="1.5" />
       <module name="springboot-shiro" target="1.8" />
       <module name="springboot_shiro" target="1.8" />
       <module name="springsecuritydemo" target="1.8" />
+      <module name="WordCount" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo" options="-parameters" />
       <module name="springboot_shiro" options="" />
       <module name="springsecuritydemo" options="-parameters" />
     </option>
