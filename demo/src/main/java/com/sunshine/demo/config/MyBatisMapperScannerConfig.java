@@ -8,6 +8,12 @@ import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 
 import java.util.Properties;
 
+/**
+ * 功能描述: Mybatis扩展配置，增加个性属性
+ *
+ * @Author: wangyanjing
+ * @Date: 2019/1/25 14:01
+ **/
 @Configuration
 @AutoConfigureAfter(MyBatisConfig.class)
 public class MyBatisMapperScannerConfig {
@@ -25,5 +31,4 @@ public class MyBatisMapperScannerConfig {
         mapperScannerConfigurer.setProperties(properties);
         return mapperScannerConfigurer;
     }
-    
 }

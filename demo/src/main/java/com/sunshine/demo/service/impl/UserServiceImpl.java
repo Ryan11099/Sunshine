@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yanjh
@@ -17,17 +20,28 @@ import java.util.concurrent.ExecutorService;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDOMapper userDOMapper;
-    @Autowired
-    private ExecutorService executorService;
 
     @Override
     public int insert(UserDO param) {
-        for (int i =10; i>=0; i--){
-            param.setId(i+1);
-            executorService.execute(()->userDOMapper.insertSelective(param));
-            System.out.println(Thread.currentThread().getName());
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                5,
+                7,
+                10,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>(),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.DiscardPolicy());
+        long beginTime = System.currentTimeMillis();
+        System.out.println("开始时间为：" + System.currentTimeMillis());
+        for (int i = 0; i <= 300; i++) {
+            threadPoolExecutor.execute(() -> {
+                param.setPassword(String.valueOf(new Random().nextInt(1000000)) + System.currentTimeMillis());
+                userDOMapper.insertSelective(param);
+                System.out.println("线程名为：" + Thread.currentThread().getName());
+            });
         }
-        executorService.shutdown();
+        System.out.println("共用时间为：" + (System.currentTimeMillis() - beginTime));
+        threadPoolExecutor.shutdown();
         return 0;
     }
 }

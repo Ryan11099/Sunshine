@@ -14,11 +14,11 @@ public class ThreadPoolConfig {
     @Bean
     public ThreadPoolExecutor threadPoolExecutor() {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-                2,
                 5,
-                2L,
+                7,
+                10  ,
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(3),
+                new LinkedBlockingQueue<Runnable>(),
                 Executors.defaultThreadFactory(),
                 new ThreadPoolExecutor.DiscardPolicy());
         return threadPoolExecutor;

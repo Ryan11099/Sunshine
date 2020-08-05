@@ -15,10 +15,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class FlowsumDriver {
 
     public static void main(String[] args) throws IllegalArgumentException, IOException, ClassNotFoundException, InterruptedException {
-
-// 输入输出路径需要根据自己电脑上实际的输入输出路径设置
+        // 输入输出路径需要根据自己电脑上实际的输入输出路径设置
         args = new String[] { "F:/HadoopTemp/inputflow", "F:/HadoopTemp/output1" };
-
         // 1 获取配置信息，或者job对象实例
         Configuration configuration = new Configuration();
         Job job = Job.getInstance(configuration);

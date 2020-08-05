@@ -1,9 +1,6 @@
 package com.sunshine.demo.config;
 
-
-import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,33 +15,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
-import java.util.Properties;
+
 
 /**
- * 功能描述:
- * @params: Mybatis配置文件，数据源，分页插件，扫描地址
- * @return:
+ * 功能描述: ORM框架mybatis基础配置
+ *
  * @Author: wangyanjing
- * @Date: 2020/2/28 10:39
-**/
+ * @Date: 2019/1/25 14:01
+ **/
 @Slf4j
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Autowired
     private DataSource dataSource;
-
-    private PageHelper pagePlugin() {
-        PageHelper pageHelper = new PageHelper();
-        Properties properties = new Properties();
-        properties.setProperty("reasonable", "true");
-        properties.setProperty("supportMethodsArguments", "true");
-        properties.setProperty("returnPageInfo", "check");
-        properties.setProperty("params", "count=countSql");
-        pageHelper.setProperties(properties);
-        return pageHelper;
-    }
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean() {
@@ -54,12 +39,10 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     protected SqlSessionFactory getSqlSessionFactory() {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.jc.chile.push.entity");
-        //bean.setPlugins(new Interceptor[]{pagePlugin()});
+        bean.setTypeAliasesPackage("com.sunshine.demo.pojo");
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
             bean.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
-            bean.setConfigLocation(resolver.getResources("classpath:mybatis-config.xml")[0]);
             return bean.getObject();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +60,6 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     public PlatformTransactionManager annotationDrivenTransactionManager() {
         return new DataSourceTransactionManager(dataSource);
     }
+
 }
-
-
 
