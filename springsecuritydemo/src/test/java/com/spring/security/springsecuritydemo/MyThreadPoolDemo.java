@@ -12,12 +12,12 @@ public class MyThreadPoolDemo
     public static void main(String[] args)
     {
         // 创建线程池
-        ExecutorService executorService = new ThreadPoolExecutor(
-                2,
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
                 5,
-                2L,
+                7,
+                10,
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(3),
+                new LinkedBlockingQueue<Runnable>(),
                 Executors.defaultThreadFactory(),
                 new ThreadPoolExecutor.DiscardPolicy());
 
@@ -25,14 +25,19 @@ public class MyThreadPoolDemo
         {
             for (int i = 1; i <=10; i++)//模拟n个客户来银行办理业务，提交请求。customer
             {
-                executorService.execute(() -> {
-                    System.out.println(Thread.currentThread().getName()+"\t 办理业务"+new Random().nextInt(10));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                threadPoolExecutor.execute(() -> {
+                    System.out.println(Thread.currentThread().getName()+"\t 办理业务"+new Random().nextInt(1000));
                 });
             }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            executorService.shutdown();
+            threadPoolExecutor.shutdown();
         }
     }
 }
